@@ -1,0 +1,26 @@
+{
+  "name": "sarena",
+  "version": "1.0.0",
+  "description": "My screeps arena code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "cp build/main.js /home/azul/azul/WSL-Shared/sarena/main.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/padrezulmiro/sarena.git"
+  },
+  "author": "aZul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/padrezulmiro/sarena/issues"
+  },
+  "homepage": "https://github.com/padrezulmiro/sarena#readme",
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "parcel": "^2.16.0",
+    "typescript": "^5.9.3",
+    "@types/screeps-arena": "screepers/typed-screeps-arena#season-beta"
+  }
+}
