@@ -1,8 +1,8 @@
-class dTree {
+class behaviourTree {
     constructor() {}
     decide() {}
 }
 
-class dTreeNode {
+class behaviourTreeNode {
     constructor() {}
 }
