@@ -1,67 +1,65 @@
 import {
-    Creep,
     StructureSpawn,
     type SpawnCreepResult
 } from "game/prototypes"
 import {
-    UnitProfession,
-    minerBlueprint,
-    soldierBlueprint,
-    UnitBlueprint,
-    unitBlueprints,
-    Unit
-} from "./unit"
-import {
-    RESOURCE_ENERGY
+    RESOURCE_ENERGY,
+    type BodyPartConstant
 } from "game/constants"
 import {
     CONFIG,
-    memory
+    gameState,
 } from "./state"
+import {
+    creepBlueprints,
+    CreepProfession,
+} from "./creep"
+import type { Looper } from "./types"
 
 
-export interface Looper {
-    loop(): void
+declare module "game/prototypes" {
+    interface StructureSpawn extends Looper {
+        _spawnCreep(body: BodyPartConstant[]): SpawnCreepResult
+        spawnCreep(profession: CreepProfession): SpawnCreepResult
+    }
 }
 
-function spawnLoop(this: StructureSpawn) : void {
-    let whatToSpawn: UnitBlueprint | null = null
-    let whatToSpawnProfession: UnitProfession | null = null
-    if (memory.amountOfMiners < CONFIG.MINER_QUOTA) {
-        whatToSpawn = minerBlueprint
-        whatToSpawnProfession = UnitProfession.MINER
-    } else if (memory.amountOfSoldiers < CONFIG.SOLDIER_QUOTA) {
-        whatToSpawn = soldierBlueprint
-        whatToSpawnProfession = UnitProfession.SOLDIER
+export function spawnLoop(this: StructureSpawn) : void {
+    let whatToSpawnProfession: CreepProfession | null = null
+    if (gameState.amountOfMiners < CONFIG.MINER_QUOTA) {
+        whatToSpawnProfession = CreepProfession.MINER
+    } else if (gameState.amountOfSoldiers < CONFIG.SOLDIER_QUOTA) {
+        whatToSpawnProfession = CreepProfession.SOLDIER
     }
+
     const shouldSpawn: boolean =
-        whatToSpawn != null &&
-        this.store.getUsedCapacity(RESOURCE_ENERGY)! >= whatToSpawn.spawnCost &&
+        whatToSpawnProfession != null &&
+        this.store.getUsedCapacity(RESOURCE_ENERGY)! >= creepBlueprints
+            .get(whatToSpawnProfession).spawnCost &&
         this.spawning == null
 
-    // FIXME(azul) The ! type assertion is unadvised; will look at this later
     let spawnRet: SpawnCreepResult | null = null
     if (shouldSpawn) {
-        spawnRet = this.spawnCreep(whatToSpawn!.bodyParts)
-        const spawnee: Creep = spawnRet!.object!
-        // FIXME
-        // memory.creepProfessionMap.set(spawnee.id, whatToSpawnProfession)
+        spawnRet = this.spawnCreep(whatToSpawnProfession!)
     }
 }
 StructureSpawn.prototype.loop = spawnLoop
 
-function spawnCreep(
-    this: StructureSpawn,
-    profession: UnitProfession
-): SpawnCreepResult {
-    const res = this._spawnCreep(unitBlueprints.get(profession).bodyParts)
-    if (res.error != null) {
-        // TODO(azul) Spawn has failed and needs to return immediately
+function spawnCreep(this: StructureSpawn, profession: CreepProfession):
+SpawnCreepResult {
+    const res = this._spawnCreep(creepBlueprints.get(profession).bodyParts)
 
-    }
+    if (res.error != null) {return res}
 
-    // FIXME
-    // const spawningUnit = new Unit()
+    res.object!.profession = profession
+    // FIXME Integrate behaviour trees
+    // @ts-ignore
+    res.object!.behaviourTree = null
 
     return res
 }
+StructureSpawn.prototype._spawnCreep = StructureSpawn.prototype.spawnCreep
+// XXX(azul) Has to be ignored due to an open issue with interface function
+// overloads
+// @ts-ignore
+StructureSpawn.prototype.spawnCreep = spawnCreep
