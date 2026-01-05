@@ -15,6 +15,8 @@ import {
     CreepProfession,
 } from "./creep"
 import type { Looper } from "./types"
+import { BTreeFromJSON, type BTreeJSON } from "./behaviourTree"
+import miningJSON from "../btrees/mining.json"
 
 
 declare module "game/prototypes" {
@@ -52,14 +54,23 @@ SpawnCreepResult {
     if (res.error != null) {return res}
 
     res.object!.profession = profession
-    // FIXME Integrate behaviour trees
-    // @ts-ignore
-    res.object!.behaviourTree = null
+    switch (profession) {
+        case CreepProfession.MINER:
+            res.object!.behaviourTree = BTreeFromJSON(miningJSON)
+            break
+        case CreepProfession.SOLDIER:
+            // @ts-ignore
+            res.object!.behaviourTree = null
+            break
+        default:
+            // @ts-ignore
+            res.object!.behaviourTree = null
+    }
 
     return res
 }
 StructureSpawn.prototype._spawnCreep = StructureSpawn.prototype.spawnCreep
-// XXX(azul) Has to be ignored due to an open issue with interface function
+// HACK (azul) Has to be ignored due to an open issue with interface function
 // overloads
 // @ts-ignore
 StructureSpawn.prototype.spawnCreep = spawnCreep

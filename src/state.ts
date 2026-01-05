@@ -11,7 +11,7 @@ import { CreepProfession } from "./creep"
  */
 export const CONFIG = {
     CITY_FRONTIER: 50,
-    MINER_QUOTA: 1,
+    MINER_QUOTA: 2,
     SOLDIER_QUOTA: 5
 }
 

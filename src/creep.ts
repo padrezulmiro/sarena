@@ -6,14 +6,14 @@ import {
     ATTACK,
     type BodyPartConstant,
 } from "game/constants"
-import type { BTree } from "./behaviourTree"
+import type { BTNode } from "./behaviourTree"
 import { Creep } from "game/prototypes"
 import type { Looper } from "./types"
 
 declare module "game/prototypes" {
     interface Creep extends Looper {
         profession: CreepProfession,
-        behaviourTree: BTree
+        behaviourTree: BTNode
     }
 }
 
@@ -58,5 +58,7 @@ export const soldierBlueprint = new CreepBlueprint([MOVE, MOVE, ATTACK, ATTACK])
 function creepLoop(this: Creep) {
     console.log("Running loop for creep:")
     console.log(this)
+    // FIXME
+    // const ret = this.behaviourTree.execute(this)
 }
 Creep.prototype.loop = creepLoop
