@@ -33,11 +33,10 @@ export function BTreeFromJSON(json: BTreeJSON): BTNode {
         } else if (currentNodeJSON.children){
             transversalStack.concat(currentNodeJSON.children)
         } else {
-            // FIXME
+            // TODO
         }
     }
 
-    // FIXME
     // @ts-ignore
     return {}
 }

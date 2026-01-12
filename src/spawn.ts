@@ -10,13 +10,10 @@ import {
     CONFIG,
     gameState,
 } from "./state"
-import {
-    creepBlueprints,
-    CreepProfession,
-} from "./creep"
 import type { Looper } from "./types"
 import { BTreeFromJSON, type BTreeJSON } from "./behaviourTree"
 import miningJSON from "../btrees/mining.json"
+import type { CreepProfession } from "./professions"
 
 
 declare module "game/prototypes" {
