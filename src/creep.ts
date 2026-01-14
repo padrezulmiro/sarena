@@ -12,8 +12,6 @@ declare module "game/prototypes" {
 
 function creepLoop(this: Creep) {
     console.log("Running loop for creep:")
-    console.log(this)
-    // FIXME
-    // const ret = this.behaviourTree.execute(this)
+    this.profession.work()
 }
 Creep.prototype.loop = creepLoop

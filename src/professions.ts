@@ -52,18 +52,22 @@ const BTActionMap: Record<string, BTAction> = {
 export class CreepProfession {
     _name: CreepProfessionType
     _blueprint: CreepBlueprint
-    _behaviourTree: BTNode
+    _behaviourTrees: BTNode[]
     _actions: Map<string, BTAction>
 
     constructor(
         name: CreepProfessionType,
         blueprint: CreepBlueprint,
-        behaviourTree: BTNode
+        behaviourTrees: BTNode[]
     ) {
         this._name = name
         this._blueprint = blueprint
-        this._behaviourTree = behaviourTree
+        this._behaviourTrees = behaviourTrees
         // FIXME Maybe change behaviourTree??
+    }
+
+    work() {
+
     }
 }
 
