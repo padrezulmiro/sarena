@@ -1,10 +1,18 @@
 import { RESOURCE_ENERGY } from "game/constants"
 import type { Creep, GameObject } from "game/prototypes"
+import type { BTNode } from "./behaviourTree"
 
 export type AI = {
     blackboard: Record<string, any>
-    bTrees?: Record<>
+    bTrees?: Record<string, BTNode>
+
     run(agent: GameObject): void
+}
+
+export enum AIType {
+    HarvesterCreep,
+    SoldierCreep,
+    Spawn
 }
 
 export const minerAI: AI = {
@@ -22,5 +30,7 @@ export const minerAI: AI = {
         }
 
         // TODO Call behaviour trees
+        const minerBTree = this.bTrees!
+
     }
 }

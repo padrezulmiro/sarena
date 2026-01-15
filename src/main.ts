@@ -9,6 +9,17 @@ import {
 } from "game/utils";
 import { gameState, updateGameState } from "./state";
 import {} from "./spawn";
+import { BTreesFromJSON } from "./behaviourTree";
+
+function init() {
+    // Init behaviour trees
+    const json = {trees: []} // HACK Sub this with real json file
+    const bTrees = BTreesFromJSON(json)
+
+    // Init all AIs
+}
+
+init()
 
 export function loop() {
     updateGameState()

@@ -5,7 +5,7 @@ import {
     WORK,
     type BodyPartConstant,
 } from "game/constants"
-import { BTreeFromJSON, type BTNode } from "./behaviourTree"
+import { BTreesFromJSON, type BTNode } from "./behaviourTree"
 import miningJSON from "../btrees/mining.json"
 
 enum CreepProfessionType {
@@ -62,6 +62,6 @@ creepProfessionsMap.set(
     new CreepProfession(
         CreepProfessionType.Miner,
         new CreepBlueprint([MOVE, CARRY, WORK]),
-        BTreeFromJSON(miningJSON)
+        BTreesFromJSON(miningJSON)
     )
 )

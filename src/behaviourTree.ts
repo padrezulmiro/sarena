@@ -2,20 +2,6 @@ import { OK, RESOURCE_ENERGY } from "game/constants";
 import { Source, type Creep, type GameObject } from "game/prototypes";
 import { getObjectsByPrototype } from "game/utils";
 
-type BTAction = (creep: Creep, ...rest: any[]) => boolean
-
-export type BTNode = {
-    _actions: Map<string, BTAction>
-    _children: BTNode[];
-    execute(target: GameObject): boolean;
-}
-
-export type BTreeJSON = {
-    root: string;
-    properties: Record<string, string>;
-    nodes: Record<string, BTNodeJSON>;
-}
-
 type BTNodeJSON = {
     id: string;
     name: string;
@@ -24,6 +10,24 @@ type BTNodeJSON = {
     properties: Record<string, string>;
     child?: string;
     children?: string[];
+}
+
+export type BTreeJSON = {
+    root: string;
+    properties: Record<string, string>;
+    nodes: Record<string, BTNodeJSON>;
+}
+
+export type BTreesJSON = {
+    trees: BTreeJSON[]
+}
+
+type BTAction = (creep: Creep, ...rest: any[]) => boolean
+
+export type BTNode = {
+    _actions: Map<string, BTAction>
+    _children: BTNode[];
+    execute(target: GameObject): boolean;
 }
 
 const BTActionMap: Record<string, BTAction> = {
@@ -35,7 +39,7 @@ const BTActionMap: Record<string, BTAction> = {
 }
 
 
-export function BTreeFromJSON(json: BTreeJSON): BTNode {
+export function BTreesFromJSON(json: BTreesJSON): BTNode {
     const transversalStack = [json.root]
     const builtNodes = new Map<string, BTNode>()
     while (transversalStack.length != 0) { // FIXME
@@ -60,7 +64,8 @@ export function BTreeFromJSON(json: BTreeJSON): BTNode {
 /*************************************/
 
 function harvest(creep: Creep): boolean {
-    const ret = creep.harvest(creep.findClosestByPath(getObjectsByPrototype(Source))!)
+    const sources = getObjectsByPrototype(Source)
+    const ret = creep.harvest(creep.findClosestByPath(sources)!)
     return ret == OK
 }
 

@@ -11,7 +11,7 @@ import {
     gameState,
 } from "./state"
 import type { Looper } from "./types"
-import { BTreeFromJSON, type BTreeJSON } from "./behaviourTree"
+import { BTreesFromJSON, type BTreeJSON } from "./behaviourTree"
 import miningJSON from "../btrees/mining.json"
 import type { CreepProfession } from "./professions"
 
@@ -53,7 +53,7 @@ SpawnCreepResult {
     res.object!.profession = profession
     switch (profession) {
         case CreepProfession.MINER:
-            res.object!.behaviourTree = BTreeFromJSON(miningJSON)
+            res.object!.behaviourTree = BTreesFromJSON(miningJSON)
             break
         case CreepProfession.SOLDIER:
             // @ts-ignore
