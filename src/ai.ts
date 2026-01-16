@@ -21,12 +21,12 @@ export const harvesterAI: AI = {
     },
 
     run(agent: Creep) {
-        if (this.blackboard["state"] == "harvest" &&
-                agent.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
+        if (this.blackboard["state"] == "harvest" && agent.store
+                .getFreeCapacity(RESOURCE_ENERGY) == 0) {
             this.blackboard["state"] = "deposit"
             this.bTrees![this.blackboard["state"]]
-        } else if (this.blackboard["state"] == "deposit" &&
-                agent.store.getUsedCapacity(RESOURCE_ENERGY) == 0) {
+        } else if (this.blackboard["state"] == "deposit" && agent.store
+                .getUsedCapacity(RESOURCE_ENERGY) == 0) {
             this.blackboard["state"] = "harvest"
             this.bTrees![this.blackboard["state"]]
         }

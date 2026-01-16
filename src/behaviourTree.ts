@@ -4,7 +4,7 @@ import { getObjectsByPrototype } from "game/utils";
 
 type BTNodeJSON = {
     id: string;
-    name: string;
+    name: "sequence" | "selector" | "action";
     title: string;
     description: string;
     properties: Record<string, string>;
@@ -25,7 +25,6 @@ export type BTreesJSON = {
 type BTAction = (creep: Creep, ...rest: any[]) => boolean
 
 export type BTNode = {
-    _actions: Map<string, BTAction>
     _children: BTNode[];
     execute(target: GameObject): boolean;
 }
@@ -39,24 +38,96 @@ const BTActionMap: Record<string, BTAction> = {
 }
 
 export function BTreesFromJSON(json: BTreesJSON): Record<string, BTNode> {
-    const transversalStack = [json.root]
-    const builtNodes = new Map<string, BTNode>()
-    while (transversalStack.length != 0) { // FIXME
-        const currentNodeJSON =
-            json.nodes[transversalStack.pop()!] as BTNodeJSON
+    for (let tree of json.trees) {
 
-        if (currentNodeJSON.child) {
-            transversalStack.push(currentNodeJSON.child)
-        } else if (currentNodeJSON.children){
-            transversalStack.concat(currentNodeJSON.children)
-        } else {
-            // TODO
+        const transversalStack = [tree.root]
+        const builtNodes = new Map<string, BTNode>()
+
+        while (transversalStack.length != 0) { // FIXME
+            const currentNodeJSON =
+                tree.nodes[transversalStack.pop()!] as BTNodeJSON
+
+            // Children aren't built, push to stack and iterate again
+            if (!childrenBuilt(currentNodeJSON, builtNodes)) {
+                if (currentNodeJSON.child) {
+                    transversalStack.push(currentNodeJSON.child)
+                } else if (currentNodeJSON.children) {
+                    transversalStack.concat(currentNodeJSON.children)
+                }
+                continue
+            }
+
+            // Node is ready to be built
+            const btNode = {
+
+            }
         }
     }
 
     // @ts-ignore
     return {}
 }
+
+function childrenBuilt(currentNodeJSON: BTNodeJSON,
+                       builtNodes: Map<string, BTNode>): boolean {
+    let built = true
+
+    if (currentNodeJSON.child) {
+        built = builtNodes.has(currentNodeJSON.child)
+    } else if (currentNodeJSON.children) {
+        for (let child of currentNodeJSON.children) {
+            if (!builtNodes.has(child)) {
+                built = false
+                break
+            }
+        }
+    }
+
+    return built
+}
+
+function buildBTNode(nodeJSON: BTNodeJSON, builtNodes: Map<string, BTNode>) {
+    let executeFn
+    switch (nodeJSON.name) {
+        case "sequence":
+            executeFn = sequenceBTNodeExecute
+            break
+        case "selector":
+            executeFn = selectorBTNodeExecute
+            break
+        case "action":
+            executeFn = sequenceBTNodeExecute // FIXME
+            break
+    }
+}
+
+function sequenceBTNodeExecute(this: BTNode, creep: Creep): boolean {
+    let ret = false
+    for (let child of this._children) {
+        ret = child.execute(creep)
+        if (!ret) {
+            break
+        }
+    }
+    return ret
+}
+
+function selectorBTNodeExecute(this: BTNode, creep: Creep): boolean {
+    let ret = false
+    for (let child of this._children) {
+        ret = child.execute(creep)
+        if (ret) {
+            break
+        }
+    }
+    return ret
+}
+
+/*************************************/
+/* SECTION: Behaviour trees' nodes */
+/*************************************/
+
+
 
 /*************************************/
 /* SECTION: Behaviour trees' actions */

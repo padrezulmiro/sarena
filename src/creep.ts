@@ -1,17 +1,7 @@
-import type { BTNode } from "./behaviourTree"
-import { Creep } from "game/prototypes"
-import type { Looper } from "./types"
-import type { CreepProfession } from "./professions"
+import type { AI } from "./ai"
 
 declare module "game/prototypes" {
-    interface Creep extends Looper {
-        profession: CreepProfession,
-        behaviourTree: BTNode
+    interface Creep {
+        ai: AI
     }
 }
-
-function creepLoop(this: Creep) {
-    console.log("Running loop for creep:")
-    this.profession.work()
-}
-Creep.prototype.loop = creepLoop

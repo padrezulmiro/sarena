@@ -14,7 +14,7 @@
       "nodes": {
         "3a1b1c7f-4b23-46e3-8f2a-8b80e4dc5db2": {
           "id": "3a1b1c7f-4b23-46e3-8f2a-8b80e4dc5db2",
-          "name": "Action",
+          "name": "action",
           "title": "Store empty?",
           "description": "",
           "properties": {
@@ -27,7 +27,7 @@
         },
         "1303fecb-a455-4f71-be46-537b3442fd17": {
           "id": "1303fecb-a455-4f71-be46-537b3442fd17",
-          "name": "Action",
+          "name": "action",
           "title": "Adjacent to storage?",
           "description": "",
           "properties": {
@@ -40,7 +40,7 @@
         },
         "672f4ccf-ee30-45b6-9dfe-774b842db199": {
           "id": "672f4ccf-ee30-45b6-9dfe-774b842db199",
-          "name": "Action",
+          "name": "action",
           "title": "Move to storage",
           "description": "",
           "properties": {
@@ -93,7 +93,7 @@
         },
         "7bf7e1ea-b513-4307-8765-da8f8723504c": {
           "id": "7bf7e1ea-b513-4307-8765-da8f8723504c",
-          "name": "Action",
+          "name": "action",
           "title": "Deposit in storage",
           "description": "",
           "properties": {
@@ -139,7 +139,7 @@
       "nodes": {
         "5f687205-4e3a-41c6-8651-71063461412c": {
           "id": "5f687205-4e3a-41c6-8651-71063461412c",
-          "name": "Action",
+          "name": "action",
           "title": "Store full?",
           "description": null,
           "properties": {
@@ -152,7 +152,7 @@
         },
         "2bd30556-d8c0-4146-b7c7-5841970b5278": {
           "id": "2bd30556-d8c0-4146-b7c7-5841970b5278",
-          "name": "Action",
+          "name": "action",
           "title": "Adjacent to source?",
           "description": "",
           "properties": {
@@ -165,7 +165,7 @@
         },
         "1cecaaf9-c5f7-4794-9a3c-7d286ddfeb06": {
           "id": "1cecaaf9-c5f7-4794-9a3c-7d286ddfeb06",
-          "name": "Action",
+          "name": "action",
           "title": "Move to source",
           "description": "",
           "properties": {
@@ -218,7 +218,7 @@
         },
         "6d43b13f-6a3e-4441-9296-51efb574fe70": {
           "id": "6d43b13f-6a3e-4441-9296-51efb574fe70",
-          "name": "Action",
+          "name": "action",
           "title": "Harvest from source",
           "description": null,
           "properties": {
@@ -258,7 +258,7 @@
     {
       "version": "0.3.0",
       "scope": "node",
-      "name": "If-Then-Else",
+      "name": "if-then-else",
       "category": "composite",
       "title": "If-Then-Else",
       "description": null,
@@ -267,7 +267,7 @@
     {
       "version": "0.3.0",
       "scope": "node",
-      "name": "Action",
+      "name": "action",
       "category": "action",
       "title": "Action",
       "description": null,
