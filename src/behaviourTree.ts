@@ -38,8 +38,7 @@ const BTActionMap: Record<string, BTAction> = {
     "adjacentTo": adjacentTo,
 }
 
-
-export function BTreesFromJSON(json: BTreesJSON): BTNode {
+export function BTreesFromJSON(json: BTreesJSON): Record<string, BTNode> {
     const transversalStack = [json.root]
     const builtNodes = new Map<string, BTNode>()
     while (transversalStack.length != 0) { // FIXME

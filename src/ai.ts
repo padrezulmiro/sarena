@@ -15,22 +15,20 @@ export enum AIType {
     Spawn
 }
 
-export const minerAI: AI = {
+export const harvesterAI: AI = {
     blackboard: {
         state: "harvest"
     },
 
     run(agent: Creep) {
         if (this.blackboard["state"] == "harvest" &&
-            agent.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
+                agent.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
             this.blackboard["state"] = "deposit"
+            this.bTrees![this.blackboard["state"]]
         } else if (this.blackboard["state"] == "deposit" &&
-            agent.store.getUsedCapacity(RESOURCE_ENERGY) == 0) {
+                agent.store.getUsedCapacity(RESOURCE_ENERGY) == 0) {
             this.blackboard["state"] = "harvest"
+            this.bTrees![this.blackboard["state"]]
         }
-
-        // TODO Call behaviour trees
-        const minerBTree = this.bTrees!
-
     }
 }
