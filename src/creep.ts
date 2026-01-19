@@ -1,7 +1,7 @@
-import type { AI } from "./ai"
+import type { AIType } from "./ai"
 
 declare module "game/prototypes" {
     interface Creep {
-        ai: AI
+        aiType: AIType
     }
 }

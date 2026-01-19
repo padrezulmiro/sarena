@@ -10,6 +10,10 @@ import {
 import { gameState, updateGameState } from "./state";
 import {} from "./spawn";
 import { BTreesFromJSON } from "./behaviourTree";
+import bTreesJSON from "../btrees/sarena-btrees.json"
+import { ais } from "./ai";
+
+const bTrees = BTreesFromJSON(bTreesJSON)
 
 export function loop() {
     updateGameState()
@@ -20,7 +24,7 @@ export function loop() {
         .filter((structure) => structure.my)
 
     for (let creep of myCreeps) {
-        creep.loop()
+        ais[creep.aiType]!.run(creep)
     }
 
     // TODO

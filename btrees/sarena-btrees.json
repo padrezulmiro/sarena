@@ -1,269 +1,212 @@
 {
   "version": "0.3.0",
   "scope": "project",
-  "selectedTree": "21eb3b2a-4212-4dd3-8c9e-b999175291e3",
+  "selectedTree": "852d5db9-9b10-407e-8d09-30b9163fea45",
   "trees": [
     {
       "version": "0.3.0",
       "scope": "tree",
-      "id": "21eb3b2a-4212-4dd3-8c9e-b999175291e3",
-      "title": "Deposit energy",
+      "id": "ff1c04c0-348b-451a-94a8-8f930d01b241",
+      "title": "harvestEnergy",
       "description": "The root of this tree.  The title of this node sets the title of the tree.  You must have one tree called \"Root\".  You can set tree-wide properties on this node and reference them in other places with the following template syntax: `{{key_name}}`.",
-      "root": "dbad8224-9355-4d52-946a-4ba040b4aac4",
+      "root": "b0c38839-c60a-49eb-b865-9ce1d5c9dd8b",
       "properties": {},
       "nodes": {
-        "3a1b1c7f-4b23-46e3-8f2a-8b80e4dc5db2": {
-          "id": "3a1b1c7f-4b23-46e3-8f2a-8b80e4dc5db2",
-          "name": "action",
-          "title": "Store empty?",
-          "description": "",
-          "properties": {
-            "fn": "store-empty"
-          },
-          "display": {
-            "x": -432,
-            "y": 516
-          }
-        },
-        "1303fecb-a455-4f71-be46-537b3442fd17": {
-          "id": "1303fecb-a455-4f71-be46-537b3442fd17",
-          "name": "action",
-          "title": "Adjacent to storage?",
-          "description": "",
-          "properties": {
-            "fn": "adjacent-to"
-          },
-          "display": {
-            "x": -228,
-            "y": 516
-          }
-        },
-        "672f4ccf-ee30-45b6-9dfe-774b842db199": {
-          "id": "672f4ccf-ee30-45b6-9dfe-774b842db199",
-          "name": "action",
-          "title": "Move to storage",
-          "description": "",
-          "properties": {
-            "fn": "move-to"
-          },
-          "display": {
-            "x": -12,
-            "y": 384
-          }
-        },
-        "66983d7b-dbe8-4df4-9e7a-4a348eda1897": {
-          "id": "66983d7b-dbe8-4df4-9e7a-4a348eda1897",
+        "9af7cf7d-fb93-4dd1-b435-1bc8254a9f40": {
+          "id": "9af7cf7d-fb93-4dd1-b435-1bc8254a9f40",
           "name": "sequence",
           "title": "Sequence",
           "description": "Takes multiple children and runs them from top to bottom (or left to right).  If any fail, this node fails, if all succeed, this node succeeds.",
           "properties": {},
           "display": {
-            "x": -228,
-            "y": 252
+            "x": -168,
+            "y": 216
           },
           "children": [
-            "3dcd421d-7988-40bd-9059-f2bdf9f7e3fc",
-            "e474af8c-f460-491e-824a-dc05cf364338",
-            "672f4ccf-ee30-45b6-9dfe-774b842db199"
+            "70730d0e-668e-4afc-8390-075f90874c51",
+            "a6dacf2e-2d03-4bad-807f-3c6331ce69e2"
           ]
         },
-        "3dcd421d-7988-40bd-9059-f2bdf9f7e3fc": {
-          "id": "3dcd421d-7988-40bd-9059-f2bdf9f7e3fc",
-          "name": "negate",
-          "title": "Negate",
-          "description": "Takes one child.  If that child succeeds, this node fails, and vice versa.",
-          "properties": {},
-          "display": {
-            "x": -432,
-            "y": 384
-          },
-          "child": "3a1b1c7f-4b23-46e3-8f2a-8b80e4dc5db2"
-        },
-        "e474af8c-f460-491e-824a-dc05cf364338": {
-          "id": "e474af8c-f460-491e-824a-dc05cf364338",
-          "name": "negate",
-          "title": "Negate",
-          "description": "Takes one child.  If that child succeeds, this node fails, and vice versa.",
-          "properties": {},
-          "display": {
-            "x": -228,
-            "y": 384
-          },
-          "child": "1303fecb-a455-4f71-be46-537b3442fd17"
-        },
-        "7bf7e1ea-b513-4307-8765-da8f8723504c": {
-          "id": "7bf7e1ea-b513-4307-8765-da8f8723504c",
-          "name": "action",
-          "title": "Deposit in storage",
-          "description": "",
-          "properties": {
-            "fn": "deposit-to"
-          },
-          "display": {
-            "x": 192,
-            "y": 252
-          }
-        },
-        "dbad8224-9355-4d52-946a-4ba040b4aac4": {
-          "id": "dbad8224-9355-4d52-946a-4ba040b4aac4",
+        "b0c38839-c60a-49eb-b865-9ce1d5c9dd8b": {
+          "id": "b0c38839-c60a-49eb-b865-9ce1d5c9dd8b",
           "name": "select",
           "title": "Select",
           "description": "Takes multiple children and runs them from top to bottom (or left to right), succeeding when any one succeeds.  Fails if all fail.",
           "properties": {},
           "display": {
             "x": -12,
-            "y": 120
+            "y": 84
           },
           "children": [
-            "66983d7b-dbe8-4df4-9e7a-4a348eda1897",
-            "7bf7e1ea-b513-4307-8765-da8f8723504c"
+            "9af7cf7d-fb93-4dd1-b435-1bc8254a9f40",
+            "f8d39945-9684-4c06-a29f-4492ffeb3a57"
           ]
+        },
+        "153abb1f-b10a-451b-8e2a-f249fd47af04": {
+          "id": "153abb1f-b10a-451b-8e2a-f249fd47af04",
+          "name": "action",
+          "title": "Adjacent to <target>?",
+          "description": "",
+          "properties": {
+            "fn": "adjacentTo",
+            "target": "source"
+          },
+          "display": {
+            "x": -276,
+            "y": 480
+          }
+        },
+        "a6dacf2e-2d03-4bad-807f-3c6331ce69e2": {
+          "id": "a6dacf2e-2d03-4bad-807f-3c6331ce69e2",
+          "name": "action",
+          "title": "Move to <target>",
+          "description": "",
+          "properties": {
+            "fn": "moveTo",
+            "target": "source"
+          },
+          "display": {
+            "x": -72,
+            "y": 348
+          }
+        },
+        "f8d39945-9684-4c06-a29f-4492ffeb3a57": {
+          "id": "f8d39945-9684-4c06-a29f-4492ffeb3a57",
+          "name": "action",
+          "title": "Harvest",
+          "description": "",
+          "properties": {
+            "fn": "harvest"
+          },
+          "display": {
+            "x": 144,
+            "y": 216
+          }
+        },
+        "70730d0e-668e-4afc-8390-075f90874c51": {
+          "id": "70730d0e-668e-4afc-8390-075f90874c51",
+          "name": "negate",
+          "title": "Negate",
+          "description": "Takes one child.  If that child succeeds, this node fails, and vice versa.",
+          "properties": {},
+          "display": {
+            "x": -276,
+            "y": 348
+          },
+          "child": "153abb1f-b10a-451b-8e2a-f249fd47af04"
         }
       },
       "display": {
-        "camera_x": 871,
-        "camera_y": 99,
-        "camera_z": 1,
+        "camera_x": 715.0000160120866,
+        "camera_y": 120.99753129847991,
+        "camera_z": 0.75,
         "x": -12,
-        "y": 0
+        "y": -36
       }
     },
     {
       "version": "0.3.0",
       "scope": "tree",
-      "id": "ee2a0f83-5d4c-4125-9caf-10f593af5d30",
-      "title": "Harvest energy",
+      "id": "852d5db9-9b10-407e-8d09-30b9163fea45",
+      "title": "depositEnergy",
       "description": "The root of this tree.  The title of this node sets the title of the tree.  You must have one tree called \"Root\".  You can set tree-wide properties on this node and reference them in other places with the following template syntax: `{{key_name}}`.",
-      "root": "1e8916fa-be24-4360-a32d-1584c19013e4",
+      "root": "df583b6c-9710-41ab-8d27-134f08343b83",
       "properties": {},
       "nodes": {
-        "5f687205-4e3a-41c6-8651-71063461412c": {
-          "id": "5f687205-4e3a-41c6-8651-71063461412c",
-          "name": "action",
-          "title": "Store full?",
-          "description": null,
-          "properties": {
-            "fn": "store-full"
-          },
-          "display": {
-            "x": -432,
-            "y": 504
-          }
-        },
-        "2bd30556-d8c0-4146-b7c7-5841970b5278": {
-          "id": "2bd30556-d8c0-4146-b7c7-5841970b5278",
-          "name": "action",
-          "title": "Adjacent to source?",
-          "description": "",
-          "properties": {
-            "fn": "adjacent-to"
-          },
-          "display": {
-            "x": -228,
-            "y": 504
-          }
-        },
-        "1cecaaf9-c5f7-4794-9a3c-7d286ddfeb06": {
-          "id": "1cecaaf9-c5f7-4794-9a3c-7d286ddfeb06",
-          "name": "action",
-          "title": "Move to source",
-          "description": "",
-          "properties": {
-            "fn": "move-to"
-          },
-          "display": {
-            "x": -12,
-            "y": 372
-          }
-        },
-        "bd059240-c4f7-4555-a5d7-06682a3ada3a": {
-          "id": "bd059240-c4f7-4555-a5d7-06682a3ada3a",
+        "200ed894-aada-45ee-864a-b58b79b65c65": {
+          "id": "200ed894-aada-45ee-864a-b58b79b65c65",
           "name": "sequence",
           "title": "Sequence",
           "description": "Takes multiple children and runs them from top to bottom (or left to right).  If any fail, this node fails, if all succeed, this node succeeds.",
           "properties": {},
           "display": {
-            "x": -228,
-            "y": 240
+            "x": -156,
+            "y": 252
           },
           "children": [
-            "6599f396-1c85-4f20-8cc2-4ceceead9346",
-            "b7ad868a-d6d5-4f3b-8e12-a5d89601d154",
-            "1cecaaf9-c5f7-4794-9a3c-7d286ddfeb06"
+            "6fd67a9d-882e-4c14-85a5-cef60e05f84a",
+            "9cfd67d0-b3ef-432f-b013-2e8eda49e65a"
           ]
         },
-        "6599f396-1c85-4f20-8cc2-4ceceead9346": {
-          "id": "6599f396-1c85-4f20-8cc2-4ceceead9346",
-          "name": "negate",
-          "title": "Negate",
-          "description": "Takes one child.  If that child succeeds, this node fails, and vice versa.",
-          "properties": {},
-          "display": {
-            "x": -432,
-            "y": 372
-          },
-          "child": "5f687205-4e3a-41c6-8651-71063461412c"
-        },
-        "b7ad868a-d6d5-4f3b-8e12-a5d89601d154": {
-          "id": "b7ad868a-d6d5-4f3b-8e12-a5d89601d154",
-          "name": "negate",
-          "title": "Negate",
-          "description": "Takes one child.  If that child succeeds, this node fails, and vice versa.",
-          "properties": {},
-          "display": {
-            "x": -228,
-            "y": 372
-          },
-          "child": "2bd30556-d8c0-4146-b7c7-5841970b5278"
-        },
-        "6d43b13f-6a3e-4441-9296-51efb574fe70": {
-          "id": "6d43b13f-6a3e-4441-9296-51efb574fe70",
-          "name": "action",
-          "title": "Harvest from source",
-          "description": null,
-          "properties": {
-            "fn": "harvest-from"
-          },
-          "display": {
-            "x": 192,
-            "y": 240
-          }
-        },
-        "1e8916fa-be24-4360-a32d-1584c19013e4": {
-          "id": "1e8916fa-be24-4360-a32d-1584c19013e4",
+        "df583b6c-9710-41ab-8d27-134f08343b83": {
+          "id": "df583b6c-9710-41ab-8d27-134f08343b83",
           "name": "select",
           "title": "Select",
           "description": "Takes multiple children and runs them from top to bottom (or left to right), succeeding when any one succeeds.  Fails if all fail.",
           "properties": {},
           "display": {
-            "x": -12,
-            "y": 108
+            "x": 0,
+            "y": 120
           },
           "children": [
-            "bd059240-c4f7-4555-a5d7-06682a3ada3a",
-            "6d43b13f-6a3e-4441-9296-51efb574fe70"
+            "200ed894-aada-45ee-864a-b58b79b65c65",
+            "c2a7634d-cf8b-460b-85bf-e25f1c8bc22e"
           ]
+        },
+        "039fb604-f3c1-42c6-8170-8f6cf7cad346": {
+          "id": "039fb604-f3c1-42c6-8170-8f6cf7cad346",
+          "name": "action",
+          "title": "Adjacent to <target>?",
+          "description": "",
+          "properties": {
+            "fn": "adjacentTo",
+            "target": "store"
+          },
+          "display": {
+            "x": -264,
+            "y": 516
+          }
+        },
+        "9cfd67d0-b3ef-432f-b013-2e8eda49e65a": {
+          "id": "9cfd67d0-b3ef-432f-b013-2e8eda49e65a",
+          "name": "action",
+          "title": "Move to <target>",
+          "description": "",
+          "properties": {
+            "fn": "moveTo",
+            "target": "store"
+          },
+          "display": {
+            "x": -60,
+            "y": 384
+          }
+        },
+        "c2a7634d-cf8b-460b-85bf-e25f1c8bc22e": {
+          "id": "c2a7634d-cf8b-460b-85bf-e25f1c8bc22e",
+          "name": "action",
+          "title": "Deposit",
+          "description": "",
+          "properties": {
+            "fn": "deposit"
+          },
+          "display": {
+            "x": 156,
+            "y": 252
+          }
+        },
+        "6fd67a9d-882e-4c14-85a5-cef60e05f84a": {
+          "id": "6fd67a9d-882e-4c14-85a5-cef60e05f84a",
+          "name": "negate",
+          "title": "Negate",
+          "description": "Takes one child.  If that child succeeds, this node fails, and vice versa.",
+          "properties": {},
+          "display": {
+            "x": -264,
+            "y": 384
+          },
+          "child": "039fb604-f3c1-42c6-8170-8f6cf7cad346"
         }
       },
       "display": {
-        "camera_x": 785,
-        "camera_y": 140,
+        "camera_x": 714.0000133434054,
+        "camera_y": 128.00124003901243,
         "camera_z": 0.75,
-        "x": -12,
-        "y": -12
+        "x": 0,
+        "y": 0
       }
     }
   ],
   "custom_nodes": [
-    {
-      "version": "0.3.0",
-      "scope": "node",
-      "name": "if-then-else",
-      "category": "composite",
-      "title": "If-Then-Else",
-      "description": null,
-      "properties": {}
-    },
     {
       "version": "0.3.0",
       "scope": "node",

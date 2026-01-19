@@ -1,34 +1,49 @@
 import { RESOURCE_ENERGY } from "game/constants"
 import type { Creep, GameObject } from "game/prototypes"
-import type { BTNode } from "./behaviourTree"
+import type { BTActionType, BTNode, BTreeType } from "./behaviourTree"
+
+export type AIType =
+    "harvester" |
+    "soldier" |
+    "spawn"
 
 export type AI = {
-    blackboard: Record<string, any>
-    bTrees?: Record<string, BTNode>
+    type: AIType
+    context: Record<string, any>
+    bTrees?: Record<BTreeType, BTNode>
 
     run(agent: GameObject): void
 }
 
-export enum AIType {
-    HarvesterCreep,
-    SoldierCreep,
-    Spawn
-}
-
 export const harvesterAI: AI = {
-    blackboard: {
+    type: "harvester",
+    context: {
         state: "harvest"
     },
 
-    run(agent: Creep) {
-        if (this.blackboard["state"] == "harvest" && agent.store
+    bTrees: {
+    },
+
+    run(harvester: Creep) {
+        if (this.context["state"] == "harvest" && harvester.store
                 .getFreeCapacity(RESOURCE_ENERGY) == 0) {
-            this.blackboard["state"] = "deposit"
-            this.bTrees![this.blackboard["state"]]
-        } else if (this.blackboard["state"] == "deposit" && agent.store
+            this.context["state"] = "deposit"
+        } else if (this.context["state"] == "deposit" && harvester.store
                 .getUsedCapacity(RESOURCE_ENERGY) == 0) {
-            this.blackboard["state"] = "harvest"
-            this.bTrees![this.blackboard["state"]]
+            this.context["state"] = "harvest"
+        }
+
+        switch (this.context["state"]) {
+            case "harvest":
+                this.bTrees?.harvestEnergy.execute(this.context, harvester)
+                break
+            case "deposit":
+                this.bTrees?.depositEnergy.execute(this.context, harvester)
+                break
         }
     }
+}
+
+export const ais: Partial<Record<AIType, AI>> = {
+    harvester: harvesterAI
 }
