@@ -1,6 +1,7 @@
 import { RESOURCE_ENERGY } from "game/constants"
 import type { Creep, GameObject } from "game/prototypes"
 import type { BTActionType, BTNode, BTreeType } from "./behaviourTree"
+import { bTrees } from "./main"
 
 export type AIType =
     "harvester" |
@@ -10,7 +11,7 @@ export type AIType =
 export type AI = {
     type: AIType
     context: Record<string, any>
-    bTrees?: Record<BTreeType, BTNode>
+    bTrees?: Partial<Record<BTreeType, BTNode>>
 
     run(agent: GameObject): void
 }
@@ -22,6 +23,8 @@ export const harvesterAI: AI = {
     },
 
     bTrees: {
+        harvestEnergy: bTrees.harvestEnergy!,
+        depositEnergy: bTrees.depositEnergy!
     },
 
     run(harvester: Creep) {
@@ -35,10 +38,10 @@ export const harvesterAI: AI = {
 
         switch (this.context["state"]) {
             case "harvest":
-                this.bTrees?.harvestEnergy.execute(this.context, harvester)
+                this.bTrees!.harvestEnergy!.execute(this.context, harvester)
                 break
             case "deposit":
-                this.bTrees?.depositEnergy.execute(this.context, harvester)
+                this.bTrees!.depositEnergy!.execute(this.context, harvester)
                 break
         }
     }

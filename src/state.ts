@@ -1,6 +1,5 @@
 import { Creep } from "game/prototypes"
 import { getObjectsByPrototype } from "game/utils"
-import { CreepProfession } from "./creep"
 
 /**
  * AI configuration parameters
@@ -27,11 +26,11 @@ export function updateGameState() {
     let amountOfMiners = 0
     let amountOfSoldiers = 0
     for (let creep of myCreeps) {
-        switch (creep.profession) {
-            case CreepProfession.MINER:
+        switch (creep.aiType) {
+            case "harvester":
                 ++amountOfMiners
                 break
-            case CreepProfession.SOLDIER:
+            case "soldier":
                 ++amountOfSoldiers
                 break
         }

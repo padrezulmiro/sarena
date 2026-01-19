@@ -10,59 +10,44 @@ import {
     CONFIG,
     gameState,
 } from "./state"
-import type { Looper } from "./types"
-import { BTreesFromJSON, type BTreeJSON } from "./behaviourTree"
-import miningJSON from "../btrees/mining.json"
-import type { CreepProfession } from "./professions"
+import { blueprints, type CreepBlueprint } from "./creep"
+import { ais, type AI, type AIType } from "./ai"
 
 
 declare module "game/prototypes" {
-    interface StructureSpawn extends Looper {
+    interface StructureSpawn {
         _spawnCreep(body: BodyPartConstant[]): SpawnCreepResult
-        spawnCreep(profession: CreepProfession): SpawnCreepResult
+        spawnCreep(blueprint: CreepBlueprint, aiType: AIType): SpawnCreepResult
+        loop(): void
     }
 }
 
 export function spawnLoop(this: StructureSpawn) : void {
-    let whatToSpawnProfession: CreepProfession | null = null
+    let whatToSpawn: CreepBlueprint | null = null
     if (gameState.amountOfMiners < CONFIG.MINER_QUOTA) {
-        whatToSpawnProfession = CreepProfession.MINER
+        whatToSpawn = blueprints["harvest"]!
     } else if (gameState.amountOfSoldiers < CONFIG.SOLDIER_QUOTA) {
-        whatToSpawnProfession = CreepProfession.SOLDIER
+        whatToSpawn = blueprints["soldier"]!
     }
 
     const shouldSpawn: boolean =
-        whatToSpawnProfession != null &&
-        this.store.getUsedCapacity(RESOURCE_ENERGY)! >= creepBlueprints
-            .get(whatToSpawnProfession).spawnCost &&
+        whatToSpawn != null &&
+        this.store.getUsedCapacity(RESOURCE_ENERGY)! >= whatToSpawn.spawnCost &&
         this.spawning == null
 
     let spawnRet: SpawnCreepResult | null = null
     if (shouldSpawn) {
-        spawnRet = this.spawnCreep(whatToSpawnProfession!)
+        spawnRet = this.spawnCreep(whatToSpawn!, "harvester")
     }
 }
 StructureSpawn.prototype.loop = spawnLoop
 
-function spawnCreep(this: StructureSpawn, profession: CreepProfession):
+function spawnCreep(this: StructureSpawn, blueprint: CreepBlueprint,
+                   aiType: AIType):
 SpawnCreepResult {
-    const res = this._spawnCreep(creepBlueprints.get(profession).bodyParts)
-
+    const res = this._spawnCreep(blueprint.bodyParts)
     if (res.error != null) {return res}
-
-    res.object!.profession = profession
-    switch (profession) {
-        case CreepProfession.MINER:
-            res.object!.behaviourTree = BTreesFromJSON(miningJSON)
-            break
-        case CreepProfession.SOLDIER:
-            // @ts-ignore
-            res.object!.behaviourTree = null
-            break
-        default:
-            // @ts-ignore
-            res.object!.behaviourTree = null
-    }
+    res.object!.aiType = aiType
 
     return res
 }

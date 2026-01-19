@@ -2,9 +2,9 @@ import { OK, RESOURCE_ENERGY } from "game/constants";
 import { Source, type Creep, type GameObject, type Position } from "game/prototypes";
 import { getObjectsByPrototype } from "game/utils";
 
-export type BTreeType = string
-    // "depositEnergy" |
-    // "harvestEnergy"
+export type BTreeType =
+    "depositEnergy" |
+    "harvestEnergy"
 
 export type BTNodeType =
     "sequence" |
