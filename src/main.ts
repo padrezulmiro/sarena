@@ -32,7 +32,6 @@ export function loop() {
     //     structure.loop()
     // }
 
-    const spawn: StructureSpawn | undefined =
-        getObjectsByPrototype(StructureSpawn)[0]
+    const spawn = getObjectsByPrototype(StructureSpawn)[0]
     spawn?.loop()
 }

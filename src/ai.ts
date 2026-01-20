@@ -2,6 +2,7 @@ import { RESOURCE_ENERGY } from "game/constants"
 import type { Creep, GameObject } from "game/prototypes"
 import type { BTActionType, BTNode, BTreeType } from "./behaviourTree"
 import { bTrees } from "./main"
+import { findClosestByPath } from "game/utils"
 
 export type AIType =
     "harvester" |
@@ -16,7 +17,7 @@ export type AI = {
     run(agent: GameObject): void
 }
 
-export const harvesterAI: AI = {
+const harvesterAI: AI = {
     type: "harvester",
     context: {
         state: "harvest"
@@ -44,6 +45,16 @@ export const harvesterAI: AI = {
                 this.bTrees!.depositEnergy!.execute(this.context, harvester)
                 break
         }
+    }
+}
+
+const soldierAI: AI & {state: "attack" | "move"} = {
+    type: "soldier",
+    state: "move",
+    context: {},
+
+    run(soldier: Creep) {
+        // const inRangeToClosestTarget = findClosestByPath(fromPos, positions)
     }
 }
 
