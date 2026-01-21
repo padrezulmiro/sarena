@@ -10,10 +10,10 @@ import {
 import { gameState, updateGameState } from "./state";
 import {} from "./spawn";
 import { BTreesFromJSON, type BTreesJSON } from "./behaviourTree";
-import bTreesJSON from "../btrees/sarena-btrees.json"
 import { ais } from "./ai";
+import { B_TREES_JSON } from "./btrees/btrees";
 
-export const bTrees = BTreesFromJSON(bTreesJSON as BTreesJSON)
+export const bTrees = BTreesFromJSON(B_TREES_JSON as BTreesJSON)
 
 export function loop() {
     updateGameState()
