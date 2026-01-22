@@ -54,6 +54,10 @@ const soldierAI: AI & {state: "attack" | "move"} = {
     context: {},
 
     run(soldier: Creep) {
+        // Choose direction when far from targets
+        // Maybe there's a more efficient heuristic to choose a direction without
+        // iterating over the weighted ranges to every enemy target
+
         // const inRangeToClosestTarget = findClosestByPath(fromPos, positions)
     }
 }
