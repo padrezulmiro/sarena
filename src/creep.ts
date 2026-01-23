@@ -1,9 +1,5 @@
 import {
-    ATTACK,
     BODYPART_COST,
-    CARRY,
-    MOVE,
-    WORK,
     type BodyPartConstant
 } from "game/constants"
 import type { AIType } from "./ai"
@@ -32,9 +28,4 @@ export class CreepBlueprint {
         }
         return costSum
     }
-}
-
-export const blueprints: Partial<Record<string, CreepBlueprint>> = {
-    harvester: new CreepBlueprint([MOVE, CARRY, WORK]),
-    soldier: new CreepBlueprint([MOVE, ATTACK, ATTACK])
 }

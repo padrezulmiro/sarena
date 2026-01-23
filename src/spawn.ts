@@ -10,8 +10,9 @@ import {
     CONFIG,
     gameState,
 } from "./state"
-import { blueprints, type CreepBlueprint } from "./creep"
-import { ais, type AI, type AIType } from "./ai"
+import { type CreepBlueprint } from "./creep"
+import { type AIType } from "./ai"
+import { blueprints } from "./main"
 
 
 declare module "game/prototypes" {
