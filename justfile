@@ -1,4 +1,4 @@
-deploy_path := "$HOME/tmp/sarena"
+deploy_path := "$HOME/azul/WSL-Shared/sarena"
 
 # Build and deploy
 deploy: && change_exts
