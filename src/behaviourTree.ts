@@ -1,5 +1,10 @@
 import { OK, RESOURCE_ENERGY } from "game/constants";
-import { Source, type Creep, type GameObject, type Position } from "game/prototypes";
+import {
+    Creep,
+    Source,
+    type GameObject,
+    type Position
+} from "game/prototypes";
 import { getObjectsByPrototype } from "game/utils";
 
 export type BTreeType =
@@ -39,17 +44,14 @@ export type BTreesJSON = {
     trees: BTreeJSON[]
 }
 
-type BTAction = (context: Record<string, any>, creep: Creep, ...rest: any[]) =>
-    boolean
-
-type BTExecuteFn = (context: Record<string, any>, agent?: GameObject) => boolean
+type BTExecuteFn = (context: Record<string, any>, agent: GameObject) => boolean
 
 export type BTNode = {
     _children: BTNode[];
     execute: BTExecuteFn
 }
 
-const BTActionMap: Record<string, BTAction> = {
+const BTExecuteFnMap: Record<string, BTExecuteFn> = {
     "harvest": harvest,
     "store-empty": isStoreEmpty,
     "store-full": isStoreFull,
@@ -119,7 +121,8 @@ function buildBTNode(nodeJSON: BTNodeJSON,
             executeFn = selectorBTNodeExecute as BTExecuteFn
             break
         case "action":
-            executeFn = BTActionMap[nodeJSON.properties["fn"]!]! as BTExecuteFn
+            // executeFn = BTActionMap[nodeJSON.properties["fn"]!]! as BTExecuteFn
+            executeFn = log as BTExecuteFn
             break
 
     }
@@ -167,29 +170,49 @@ function selectorBTNodeExecute(this: BTNode, context: Record<string, any>,
 /* SECTION: Behaviour trees' actions */
 /*************************************/
 
-function harvest(context: Record<string, any>, creep: Creep): boolean {
-    const sources = getObjectsByPrototype(Source)
-    const ret = creep.harvest(creep.findClosestByPath(sources)!)
-    return ret == OK
+function harvest(context: Record<string, any>, agent: GameObject): boolean {
+    let fnRet = false
+    if (agent instanceof Creep) {
+        const sources = getObjectsByPrototype(Source)
+        const ret = agent.harvest(agent.findClosestByPath(sources)!)
+        fnRet = ret == OK
+    }
+    return fnRet
 }
 
-function isStoreFull(context: Record<string, any>, creep: Creep): boolean {
-    return creep.store.getFreeCapacity(RESOURCE_ENERGY) == 0
+function isStoreFull(context: Record<string, any>, agent: GameObject): boolean {
+    let ret = false
+    if (agent instanceof Creep) {
+        ret = agent.store.getFreeCapacity(RESOURCE_ENERGY) == 0
+    }
+    return ret
 }
 
-function isStoreEmpty(context: Record<string, any>, creep: Creep): boolean {
-    return creep.store.getUsedCapacity(RESOURCE_ENERGY) == 0
+function isStoreEmpty(context: Record<string, any>, agent: GameObject): boolean {
+    let ret = false
+    if (agent instanceof Creep) {
+        ret = agent.store.getUsedCapacity(RESOURCE_ENERGY) == 0
+    }
+    return ret
 }
 
-function adjacentTo(context: Record<string, any>, creep: Creep,
-                    target: GameObject): boolean {
+function adjacentTo(context: Record<string, any>, agent: GameObject): boolean {
     return false // TODO
 }
 
-function deposit(context: Record<string, any>, creep: Creep): boolean {
+function deposit(context: Record<string, any>, agent: GameObject): boolean {
     return false // TODO
 }
 
-function moveTo(context: Record<string, any>, creep: Creep, target: Position): boolean {
-    return creep.moveTo(target) == OK
+function moveTo(context: Record<string, any>, agent: GameObject): boolean {
+    let ret = false
+    if (agent instanceof Creep) {
+        ret = agent.moveTo(context["target"]) == OK
+    }
+    return ret
+}
+
+function log(context: Record<string, any>, agent: GameObject): boolean {
+    console.log("Executing BTAction")
+    return false
 }

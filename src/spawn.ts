@@ -26,7 +26,7 @@ declare module "game/prototypes" {
 export function spawnLoop(this: StructureSpawn) : void {
     let whatToSpawn: CreepBlueprint | null = null
     if (gameState.amountOfMiners < CONFIG.MINER_QUOTA) {
-        whatToSpawn = blueprints["harvest"]!
+        whatToSpawn = blueprints["harvester"]!
     } else if (gameState.amountOfSoldiers < CONFIG.SOLDIER_QUOTA) {
         whatToSpawn = blueprints["soldier"]!
     }
@@ -36,6 +36,7 @@ export function spawnLoop(this: StructureSpawn) : void {
         this.store.getUsedCapacity(RESOURCE_ENERGY)! >= whatToSpawn.spawnCost &&
         this.spawning == null
 
+
     let spawnRet: SpawnCreepResult | null = null
     if (shouldSpawn) {
         spawnRet = this.spawnCreep(whatToSpawn!, "harvester")
@@ -43,12 +44,23 @@ export function spawnLoop(this: StructureSpawn) : void {
 }
 StructureSpawn.prototype.loop = spawnLoop
 
-function spawnCreep(this: StructureSpawn, blueprint: CreepBlueprint,
-                   aiType: AIType):
-SpawnCreepResult {
+function spawnCreep(
+    this: StructureSpawn,
+    blueprint: CreepBlueprint,
+    aiType: AIType
+): SpawnCreepResult {
     const res = this._spawnCreep(blueprint.bodyParts)
-    if (res.error != null) {return res}
-    res.object!.aiType = aiType
+    if (res.error != null) {
+        return res
+    }
+
+    const creep = res.object!
+    creep.aiType = aiType
+    creep.aiContext = {}
+    switch (aiType) {
+        case "harvester":
+        case "soldier":
+    }
 
     return res
 }

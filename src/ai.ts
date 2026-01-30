@@ -13,3 +13,5 @@ export type AI = {
 
     run(agent: GameObject): void
 }
+
+export type AIContext = Record<string, any>

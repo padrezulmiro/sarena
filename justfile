@@ -4,9 +4,8 @@ deploy_path := "$HOME/azul/WSL-Shared/sarena"
 deploy: && change_exts
     tsc
     rm -rv {{deploy_path}}
-    mkdir -v {{deploy_path}} {{deploy_path}}/build {{deploy_path}}/build/btrees
-    cp -v -t {{deploy_path}}/build build/*.js
-    cp -v -t {{deploy_path}}/build/btrees build/btrees/*.js
+    mkdir -v {{deploy_path}}
+    cp -r -v -t {{deploy_path}} build
 
 
 [private]
