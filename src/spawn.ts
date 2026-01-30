@@ -1,4 +1,5 @@
 import {
+    Creep,
     StructureSpawn,
     type SpawnCreepResult
 } from "game/prototypes"
@@ -11,7 +12,7 @@ import {
     gameState,
 } from "./state"
 import { type CreepBlueprint } from "./creep"
-import { type AIType } from "./ai"
+import { type AIContext, type AIType } from "./ai"
 import { blueprints } from "./main"
 
 
@@ -57,10 +58,7 @@ function spawnCreep(
     const creep = res.object!
     creep.aiType = aiType
     creep.aiContext = {}
-    switch (aiType) {
-        case "harvester":
-        case "soldier":
-    }
+    // initCreepAIContext(creep)
 
     return res
 }
@@ -69,3 +67,16 @@ StructureSpawn.prototype._spawnCreep = StructureSpawn.prototype.spawnCreep
 // overloads
 // @ts-ignore
 StructureSpawn.prototype.spawnCreep = spawnCreep
+
+function initCreepAIContext(creep: Creep): void {
+    const aiContext: AIContext = {}
+    switch (creep.aiType) {
+        case "harvester":
+            aiContext["state"] = "harvester"
+            break
+        case "soldier":
+            aiContext["state"] = "idle"
+            break
+    }
+    creep.aiContext = aiContext
+}

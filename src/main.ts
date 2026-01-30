@@ -1,10 +1,12 @@
 import {
     Creep,
     OwnedStructure,
+    Source,
     StructureSpawn,
 } from "game/prototypes";
 
 import {
+    findClosestByRange,
     getObjectsByPrototype
 } from "game/utils";
 import {
@@ -40,9 +42,6 @@ function initDecls(): void {
     // AI declarations
     const harvesterAI: AI = {
         type: "harvester",
-        context: {
-            state: "harvest"
-        },
 
         bTrees: {
             harvestEnergy: bTrees.harvestEnergy!,
@@ -50,24 +49,30 @@ function initDecls(): void {
         },
 
         run(harvester: Creep) {
-            if (
-                this.context["state"] == "harvest" &&
-                harvester.store.getFreeCapacity(RESOURCE_ENERGY) == 0
-            ) {
-                this.context["state"] = "deposit"
-            } else if (
-                this.context["state"] == "deposit" &&
-                harvester.store.getUsedCapacity(RESOURCE_ENERGY) == 0
-            ) {
-                this.context["state"] = "harvest"
+            if (!harvester.aiContext["state"]) {
+                harvester.aiContext["state"] = "harvest"
+                harvester.aiContext["target"] =
+                    findClosestByRange(harvester, getObjectsByPrototype(Source))
             }
 
-            switch (this.context["state"]) {
+            if (
+                harvester.aiContext["state"] == "harvest" &&
+                harvester.store.getFreeCapacity(RESOURCE_ENERGY) == 0
+            ) {
+                harvester.aiContext["state"] = "deposit"
+            } else if (
+                harvester.aiContext["state"] == "deposit" &&
+                harvester.store.getUsedCapacity(RESOURCE_ENERGY) == 0
+            ) {
+                harvester.aiContext["state"] = "harvest"
+            }
+
+            switch (harvester.aiContext["state"]) {
                 case "harvest":
-                    this.bTrees!.harvestEnergy!.execute(this.context, harvester)
+                    this.bTrees!.harvestEnergy!.execute(harvester)
                     break
                 case "deposit":
-                    this.bTrees!.depositEnergy!.execute(this.context, harvester)
+                    this.bTrees!.depositEnergy!.execute(harvester)
                     break
             }
         }
@@ -76,7 +81,6 @@ function initDecls(): void {
     const soldierAI: AI & { state: "attack" | "move" } = {
         type: "soldier",
         state: "move",
-        context: {},
 
         run(soldier: Creep) {
             // Choose direction when far from targets

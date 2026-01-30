@@ -8,7 +8,6 @@ export type AIType =
 
 export type AI = {
     type: AIType
-    context: Record<string, any>
     bTrees?: Partial<Record<BTreeType, BTNode>>
 
     run(agent: GameObject): void

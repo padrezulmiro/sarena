@@ -2,14 +2,6 @@ import {
     BODYPART_COST,
     type BodyPartConstant
 } from "game/constants"
-import type { AIContext, AIType } from "./ai"
-
-declare module "game/prototypes" {
-    interface Creep {
-        aiType: AIType
-        aiContext: AIContext
-    }
-}
 
 export class CreepBlueprint {
     #bodyParts: BodyPartConstant[]
