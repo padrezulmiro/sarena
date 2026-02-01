@@ -55,16 +55,21 @@ function initDecls(): void {
                     findClosestByRange(harvester, getObjectsByPrototype(Source))
             }
 
-            if (
+            const harvestToDepositTransition =
                 harvester.aiContext["state"] == "harvest" &&
                 harvester.store.getFreeCapacity(RESOURCE_ENERGY) == 0
-            ) {
-                harvester.aiContext["state"] = "deposit"
-            } else if (
+            const depositToHavestTransition =
                 harvester.aiContext["state"] == "deposit" &&
                 harvester.store.getUsedCapacity(RESOURCE_ENERGY) == 0
-            ) {
+
+            if (harvestToDepositTransition) {
+                harvester.aiContext["state"] = "deposit"
+                harvester.aiContext["target"] = findClosestByRange(
+                    harvester, getObjectsByPrototype(StructureSpawn))
+            } else if (depositToHavestTransition) {
                 harvester.aiContext["state"] = "harvest"
+                harvester.aiContext["target"] =
+                    findClosestByRange(harvester, getObjectsByPrototype(Source))
             }
 
             switch (harvester.aiContext["state"]) {

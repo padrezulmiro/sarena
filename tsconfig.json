@@ -22,7 +22,7 @@
                 "outDir": "./build",
 
                 // Other Outputs
-                "sourceMap": false,
+                "sourceMap": true,
                 "declaration": true,
                 "declarationMap": true,
 
