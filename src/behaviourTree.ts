@@ -2,6 +2,7 @@ import { OK, RESOURCE_ENERGY } from "game/constants";
 import {
     Creep,
     Source,
+    StructureSpawn,
     type GameObject,
     type Position
 } from "game/prototypes";
@@ -181,14 +182,13 @@ function negateBTNodeExecute(this: BTNode, agent: GameObject): boolean {
 /*************************************/
 
 function harvest(agent: GameObject): boolean {
-    let fnRet = false
+    let ret = false
     if (agent instanceof Creep) {
         const sources = getObjectsByPrototype(Source)
-        const ret = agent.harvest(agent.findClosestByPath(sources)!)
-        fnRet = ret == OK
+        ret = agent.harvest(agent.findClosestByPath(sources)!) == OK
     }
-    console.log(`Running harvest: ${fnRet}`) // NOTE
-    return fnRet
+    console.log(`Running harvest: ${ret}`) // NOTE
+    return ret
 }
 
 function isStoreFull(agent: GameObject): boolean {
@@ -216,7 +216,14 @@ function adjacentTo(agent: GameObject): boolean {
 }
 
 function deposit(agent: GameObject): boolean {
-    return false // TODO
+    let ret = false
+    if (agent instanceof Creep) {
+        const source = agent
+            .findClosestByPath(getObjectsByPrototype(StructureSpawn))!
+        ret = agent.transfer(source, RESOURCE_ENERGY) == OK
+    }
+    console.log(`Running deposit: ${ret}`) // NOTE
+    return ret
 }
 
 function moveTo(agent: GameObject): boolean {
@@ -226,9 +233,4 @@ function moveTo(agent: GameObject): boolean {
     }
     console.log(`Running moveTo: ${ret}`) // NOTE
     return ret
-}
-
-function log(agent: GameObject): boolean {
-    console.log("Executing BTAction")
-    return false
 }
