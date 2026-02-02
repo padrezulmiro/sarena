@@ -4,7 +4,6 @@ import {
     Source,
     StructureSpawn,
     type GameObject,
-    type Position
 } from "game/prototypes";
 import { getObjectsByPrototype, getRange } from "game/utils";
 
@@ -155,7 +154,6 @@ function sequenceBTNodeExecute(this: BTNode, agent: GameObject): boolean {
             break
         }
     }
-    console.log(`Running sequencer: ${ret}`) // NOTE
     return ret
 }
 
@@ -167,13 +165,11 @@ function selectorBTNodeExecute(this: BTNode, agent: GameObject): boolean {
             break
         }
     }
-    console.log(`Running selector: ${ret}`) // NOTE
     return ret
 }
 
 function negateBTNodeExecute(this: BTNode, agent: GameObject): boolean {
     const ret = this._children[0]!.execute(agent)
-    console.log(`Running negator: ${!ret}`) // NOTE
     return !ret
 }
 
@@ -187,7 +183,6 @@ function harvest(agent: GameObject): boolean {
         const sources = getObjectsByPrototype(Source)
         ret = agent.harvest(agent.findClosestByPath(sources)!) == OK
     }
-    console.log(`Running harvest: ${ret}`) // NOTE
     return ret
 }
 
@@ -196,7 +191,6 @@ function isStoreFull(agent: GameObject): boolean {
     if (agent instanceof Creep) {
         ret = agent.store.getFreeCapacity(RESOURCE_ENERGY) == 0
     }
-    console.log(`Running isStoreFull: ${ret}`)
     return ret
 }
 
@@ -205,13 +199,11 @@ function isStoreEmpty(agent: GameObject): boolean {
     if (agent instanceof Creep) {
         ret = agent.store.getUsedCapacity(RESOURCE_ENERGY) == 0
     }
-    console.log(`Running isStoreEmpty: ${ret}`) // NOTE
     return ret
 }
 
 function adjacentTo(agent: GameObject): boolean {
     const ret = getRange(agent, agent.aiContext["target"]) == 1
-    console.log(`Running adjacentTo: ${ret}`) // NOTE
     return ret
 }
 
@@ -222,7 +214,6 @@ function deposit(agent: GameObject): boolean {
             .findClosestByPath(getObjectsByPrototype(StructureSpawn))!
         ret = agent.transfer(source, RESOURCE_ENERGY) == OK
     }
-    console.log(`Running deposit: ${ret}`) // NOTE
     return ret
 }
 
@@ -231,6 +222,5 @@ function moveTo(agent: GameObject): boolean {
     if (agent instanceof Creep) {
         ret = agent.moveTo(agent.aiContext["target"]) == OK
     }
-    console.log(`Running moveTo: ${ret}`) // NOTE
     return ret
 }

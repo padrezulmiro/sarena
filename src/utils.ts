@@ -9,3 +9,9 @@ export function significantBTNodeIDs(arr: string[]): string[] {
     }
     return retArr
 }
+
+export type Logger = {}
+
+export function logger(): Logger {
+    const logger = {}
+}
